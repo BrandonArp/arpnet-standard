@@ -14,7 +14,9 @@ object ApplicationBuild extends Build {
     javaEbean
   )
 
-  val main = play.Project(appName, appVersion, appDependencies).settings(
+  val s = Defaults.defaultSettings ++ play.Project.playJavaSettings
+
+  val main = play.Project(appName, appVersion, appDependencies, settings = s).settings(
     javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked"),
 
     name := "arpnet-standard",
