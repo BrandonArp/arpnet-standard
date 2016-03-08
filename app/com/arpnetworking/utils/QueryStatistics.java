@@ -1,7 +1,7 @@
 package com.arpnetworking.utils;
 
 import com.avaje.ebean.Ebean;
-import com.avaje.ebean.meta.MetaQueryStatistic;
+import com.avaje.ebean.meta.MetaQueryPlanStatistic;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ import java.util.List;
  * @author barp
  */
 public class QueryStatistics {
-    public static List<MetaQueryStatistic> getStatistics(String serverName) {
-        return Ebean.getServer(serverName).find(MetaQueryStatistic.class).findList();
+    public static List<MetaQueryPlanStatistic> getStatistics(String serverName) {
+        return Ebean.getServer(serverName).find(MetaQueryPlanStatistic.class).findList();
     }
 
-    public static List<MetaQueryStatistic> getStatistics() {
-        return Ebean.find(MetaQueryStatistic.class).findList();
+    public static List<MetaQueryPlanStatistic> getStatistics() {
+        return Ebean.find(MetaQueryPlanStatistic.class).findList();
     }
 }

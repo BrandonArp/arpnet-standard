@@ -95,9 +95,9 @@ public class ArpnetStandard extends Plugin {
             final String dbEbeanConf = ebeanConf.getString(dbName);
             boolean foundModel = false;
             if (dbEbeanConf != null) {
-                if (dbEbeanConf.indexOf("com.avaje.ebean.meta.*") != -1 &&
-                        (dbEbeanConf.indexOf("com.arpnetworking.utils.models.*") != -1 ||
-                        dbEbeanConf.indexOf("com.arpnetworking.utils.models.QueryStatisticFinder") != -1)) {
+                if (dbEbeanConf.contains("com.avaje.ebean.meta.*") &&
+                        (dbEbeanConf.contains("com.arpnetworking.utils.models.*") ||
+                                dbEbeanConf.contains("com.arpnetworking.utils.models.QueryStatisticFinder"))) {
                     foundModel = true;
                 }
 

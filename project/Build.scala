@@ -1,11 +1,12 @@
 import sbt._
 import Keys._
-import play.Project._
+import play.Play.autoImport._
+import PlayKeys._
 
 object ApplicationBuild extends Build {
 
   val appName         = "arpnet-standard"
-  val appVersion      = "1.0-SNAPSHOT"
+  val appVersion      = "2.0-SNAPSHOT"
 
   val appDependencies = Seq(
     // Add your project dependencies here,
@@ -14,10 +15,14 @@ object ApplicationBuild extends Build {
     javaEbean
   )
 
-  val s = Defaults.defaultSettings ++ play.Project.playJavaSettings
+  //  val s = Defaults.defaultSettings ++ play.Project.playJavaSettings
 
-  val main = play.Project(appName, appVersion, appDependencies, settings = s).settings(
+  //val main = play.Project(appName, appVersion, appDependencies, settings = s).settings(
+  val main = Project(appName, file(".")).enablePlugins(play.PlayJava).settings(
     javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked"),
+    version := appVersion,
+    libraryDependencies ++= appDependencies,
+
 
     name := "arpnet-standard",
     description := "Play module to setup a base set of standard monitoring and performance logging",

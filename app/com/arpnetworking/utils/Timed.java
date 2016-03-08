@@ -4,7 +4,7 @@ import play.Logger;
 import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
-import play.mvc.SimpleResult;
+import play.mvc.Result;
 import play.mvc.With;
 
 import java.lang.annotation.ElementType;
@@ -28,8 +28,8 @@ public class Timed {
     public static class TimedAction extends Action<Logged> {
 
         @SuppressWarnings("unchecked")
-        public F.Promise<SimpleResult> call(Http.Context ctx) {
-            F.Promise<SimpleResult> result = null;
+        public F.Promise<Result> call(Http.Context ctx) {
+            F.Promise<Result> result = null;
             final Counter counter;
             if (ctx.args.containsKey("query-log")) {
                 counter = (Counter)ctx.args.get("query-log");
@@ -53,9 +53,9 @@ public class Timed {
             try {
                 counter.startTimer(finalCounterName);
                 result = delegate.call(ctx);
-                result.map(new F.Function<SimpleResult, Void>() {
+                result.map(new F.Function<Result, Void>() {
                     @Override
-                    public Void apply(SimpleResult simpleResult) throws Throwable {
+                    public Void apply(final Result result) throws Throwable {
                         counter.stopTimer(finalCounterName);
                         counter.saveCounters();
 
@@ -63,7 +63,7 @@ public class Timed {
                     }
                 }).onFailure(new F.Callback<Throwable>() {
                        @Override
-                       public void invoke(Throwable throwable) throws Throwable {
+                       public void invoke(final Throwable throwable) throws Throwable {
                            counter.stopTimer(finalCounterName);
                            counter.saveCounters();
                        }
